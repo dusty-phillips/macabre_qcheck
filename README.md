@@ -305,6 +305,33 @@ fn box_generator_with_map4() {
 
 For more info about this, see this [issue](https://github.com/mooreryan/gleam_qcheck/issues/13).
 
+### Nesting calls to `given` or `run`
+
+Do not nest calls to `given` or [run](#run) or to create complex generators. Instead use combinators like [bind](#bind), [map](#map), [map2](#map2), [tuple2](#tuple2), etc., to build a single generator then use it in a single call to given or run.
+
+That is, do this:
+
+```gleam
+pub fn addition_is_commutative__correct__test() {
+  let two_ints = qcheck.tuple2(qcheck.uniform_int(), qcheck.uniform_int())
+  use #(a, b) <- qcheck.given(two_ints)
+  assert a + b == b + a
+}
+```
+
+Do not do this:
+
+```gleam
+pub fn addition_is_commutative__incorrect__test() {
+  let an_int = qcheck.uniform_int()
+  use a <- qcheck.given(an_int)
+  use b <- qcheck.given(an_int)
+  assert a + b == b + a
+}
+```
+
+The "incorrect" way will cause a combinatorial explosion of test cases. That is, if the default test count is 1000, then for `N` calls to `given`, you will get `1000^N` test cases.
+
 ### Integrating with testing frameworks
 
 You don't have to do anything special to integrate `qcheck` with a testing framework like [gleeunit](https://github.com/lpil/gleeunit). The only thing required is that your testing framework of choice be able to handle panics/exceptions.

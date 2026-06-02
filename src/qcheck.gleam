@@ -260,6 +260,8 @@ const max_valid_codepoint: Int = 0x10FFFF
 /// Test a property against generated test cases using the provided
 /// configuration.
 ///
+/// Use [given](#given) if you want to use the default [Config](#Config).
+///
 /// ### Arguments
 ///
 /// - `config`: Settings for test execution
@@ -270,6 +272,41 @@ const max_valid_codepoint: Int = 0x10FFFF
 ///
 /// - `Nil` if all test cases pass (the property returns `Nil`)
 /// - Panics if any test case fails (the property panics)
+///
+/// ### Usage
+///
+/// Do not nest calls to `run` or [given](#given) or to create complex generators.
+/// Instead use combinators like [bind](#bind), [map](#map), [map2](#map2),
+/// [tuple2](#tuple2), etc., to build a single generator then use it in a single
+/// call to given or run.
+///
+/// That is, do this:
+///
+/// ```gleam
+/// pub fn addition_is_commutative__correct__test() {
+///   let config = qcheck.default_config()
+///   let two_ints = qcheck.tuple2(qcheck.uniform_int(), qcheck.uniform_int())
+///   use #(a, b) <- qcheck.run(config, two_ints)
+///   assert a + b == b + a
+/// }
+/// ```
+///
+/// Do not do this:
+///
+/// ```gleam
+/// pub fn addition_is_commutative__incorrect__test() {
+///   let config = qcheck.default_config()
+///   let an_int = qcheck.uniform_int()
+///   use a <- qcheck.run(config, an_int)
+///   use b <- qcheck.run(config, an_int)
+///   assert a + b == b + a
+/// }
+/// ```
+///
+/// The "incorrect" way will cause a combinatorial explosion of test cases. That
+/// is, if the default test count is 1000, then for `N` calls to `run`, you will
+/// get `1000^N` test cases.
+///
 ///
 pub fn run(
   config: Config,
@@ -282,6 +319,8 @@ pub fn run(
 /// Test a property against generated test cases using the default
 /// configuration.
 ///
+/// Use [run](#run) if you need to specify a the [Config](#Config).
+///
 /// ### Arguments
 ///
 /// - `generator`: Creates test inputs
@@ -291,6 +330,39 @@ pub fn run(
 ///
 /// - `Nil` if all test cases pass (the property returns `Nil`)
 /// - Panics if any test case fails (the property panics)
+///
+/// ### Usage
+///
+/// Do not nest calls to `given` or [run](#run) or to create complex generators.
+/// Instead use combinators like [bind](#bind), [map](#map), [map2](#map2),
+/// [tuple2](#tuple2), etc., to build a single generator then use it in a single
+/// call to given or run.
+///
+/// That is, do this:
+///
+/// ```gleam
+/// pub fn addition_is_commutative__correct__test() {
+///   let two_ints = qcheck.tuple2(qcheck.uniform_int(), qcheck.uniform_int())
+///   use #(a, b) <- qcheck.given(two_ints)
+///   assert a + b == b + a
+/// }
+/// ```
+///
+/// Do not do this:
+///
+/// ```gleam
+/// pub fn addition_is_commutative__incorrect__test() {
+///   let an_int = qcheck.uniform_int()
+///   use a <- qcheck.given(an_int)
+///   use b <- qcheck.given(an_int)
+///   assert a + b == b + a
+/// }
+/// ```
+///
+/// The "incorrect" way will cause a combinatorial explosion of test cases. That
+/// is, if the default test count is 1000, then for `N` calls to `given`, you
+/// will get `1000^N` test cases.
+///
 ///
 pub fn given(generator: Generator(a), property: fn(a) -> Nil) -> Nil {
   run(default_config(), generator, property)

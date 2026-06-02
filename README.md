@@ -9,12 +9,32 @@ While there are a ton of great articles introducing quickcheck or property-based
 - [An introduction to property based testing](https://fsharpforfunandprofit.com/pbt/)
 - [What is Property Based Testing?](https://hypothesis.works/articles/what-is-property-based-testing/)
 
+## Contents
+
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [Usage & Examples](#usage-examples)
+  - [Basic example](#basic-example)
+  - [In-depth example](#in-depth-example)
+  - [Applicative style](#applicative-style)
+  - [Nesting calls to `given` or `run`](#nesting-calls-to-given-or-run)
+  - [Integrating with testing frameworks](#integrating-with-testing-frameworks)
+- [Acknowledgements](#acknowledgements)
+- [Contributing](#contributing)
+- [License](#license)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="usage-examples"></a>
+
 ## Usage & Examples
 
 - See the API docs for detailed usage,
 - See [qcheck_viewer](https://mooreryan.github.io/gleam_qcheck/) to visualize the distributions of some of the qcheck generators.
 - See the Gleam [time](https://github.com/gleam-lang/time/tree/main/test/gleam/time) package for some examples of qcheck in action.
 - _Note: The tests contained in `./test/qcheck` aren't really great examples of how you would use the qcheck package to write tests for your own package._
+
+<!-- TOC --><a name="basic-example"></a>
 
 ### Basic example
 
@@ -75,6 +95,8 @@ Additionally, there is some info about the "shrinking". You will see:
   - (That is a real result from a property test I intionally broke for illustration from the [bsql3](https://github.com/mooreryan/bsql3/blob/b0d60113e83a8a30b00660b1190b0334be6a04a7/test/bsql3_test.gleam#L245) repository.)
 - `steps`, which shows the number of "shrink steps" it took to get to the shrunk value.
   - If this is really high, you may need to adjust your generation process.
+
+<!-- TOC --><a name="in-depth-example"></a>
 
 ### In-depth example
 
@@ -246,6 +268,8 @@ You could imagine combining a property test like the one above, with a few well 
 
 (The full code for this example can be found in `test/examples/parsing_example_test.gleam`.)
 
+<!-- TOC --><a name="applicative-style"></a>
+
 ### Applicative style
 
 The applicative style provides a nice interface for creating generators for custom types. When you have independent generators, this way can often given better shrinking then using `bind` when you don't need it.
@@ -305,6 +329,8 @@ fn box_generator_with_map4() {
 
 For more info about this, see this [issue](https://github.com/mooreryan/gleam_qcheck/issues/13).
 
+<!-- TOC --><a name="nesting-calls-to-given-or-run"></a>
+
 ### Nesting calls to `given` or `run`
 
 Do not nest calls to `given` or [run](#run) or to create complex generators. Instead use combinators like [bind](#bind), [map](#map), [map2](#map2), [tuple2](#tuple2), etc., to build a single generator then use it in a single call to given or run.
@@ -332,6 +358,8 @@ pub fn addition_is_commutative__incorrect__test() {
 
 The "incorrect" way will cause a combinatorial explosion of test cases. That is, if the default test count is 1000, then for `N` calls to `given`, you will get `1000^N` test cases.
 
+<!-- TOC --><a name="integrating-with-testing-frameworks"></a>
+
 ### Integrating with testing frameworks
 
 You don't have to do anything special to integrate `qcheck` with a testing framework like [gleeunit](https://github.com/lpil/gleeunit). The only thing required is that your testing framework of choice be able to handle panics/exceptions.
@@ -340,11 +368,15 @@ _Note: [startest](https://github.com/maxdeviant/startest) should be fine. (I las
 
 You may also be interested in [qcheck_gleeunit_utils](https://github.com/mooreryan/qcheck_gleeunit_utils) for running your tests in parallel and controlling test timeouts when using gleeunit and targeting Erlang.
 
+<!-- TOC --><a name="acknowledgements"></a>
+
 ## Acknowledgements
 
 Very heavily inspired by the [qcheck](https://github.com/c-cube/qcheck) and [base_quickcheck](https://github.com/janestreet/base_quickcheck) OCaml packages.
 
 Check out the `licenses` directory to view their licenses.
+
+<!-- TOC --><a name="contributing"></a>
 
 ## Contributing
 
@@ -354,6 +386,8 @@ Thank you for your interest in the project!
 - External contributions will generally not be accepted without prior discussion.
   - If you have an idea for a new feature, please open an issue for discussion prior to working on a pull request.
   - Small pull requests for bug fixes, typos, or other changes with limited scope may be accepted. If in doubt, please open an issue for discussion first.
+
+<!-- TOC --><a name="license"></a>
 
 ## License
 

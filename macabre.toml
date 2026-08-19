@@ -1,0 +1,14 @@
+name = "qcheck"
+version = "0.0.0"
+
+[dependencies]
+exception = { git = "git@github.com:dusty-phillips/macabre_exception.git", ref = "main" }
+gleam_regexp = { git = "git@github.com:dusty-phillips/macabre_regexp.git", ref = "main" }
+gleam_stdlib = { git = "git@github.com:dusty-phillips/macabre_stdlib.git", ref = "main" }
+gleam_yielder = { git = "git@github.com:dusty-phillips/macabre_gleam_yielder.git", ref = "main" }
+prng = { git = "git@github.com:dusty-phillips/macabre_prng.git", ref = "main" }
+
+[dev-dependencies]
+birdie = { git = "git@github.com:dusty-phillips/macabre_birdie.git", ref = "main" }
+gleeunit = { git = "git@github.com:dusty-phillips/macabre_gleeunit.git", ref = "main" }
+qcheck_gleeunit_utils = ">= 1.0.0 and < 2.0.0"

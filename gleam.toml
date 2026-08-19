@@ -1,5 +1,5 @@
 name = "qcheck"
-version = "1.0.4"
+version = "1.0.5"
 
 internal_modules = ["qcheck/test_error_message", "qcheck/internal/*"]
 

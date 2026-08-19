@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.0.5] -- 2026-08-18
+
+- Update prng dependency to v6.0.0
+
 ## [1.0.4] -- 2026-02-01
 
 - Update prng dependency to v5.0.0

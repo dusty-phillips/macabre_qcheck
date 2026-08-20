@@ -164,4 +164,5 @@ fn read_file(path: String) -> Result(BitArray, dynamic.Dynamic) {
 }
 
 @external(javascript, "./read_file_ffi.mjs", "read_file")
+@external(python, "qcheck.internal.read_file_ffi", "read_file")
 fn read_file_text(path: String) -> Result(String, dynamic.Dynamic)

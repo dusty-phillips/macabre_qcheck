@@ -106,4 +106,5 @@ pub fn rescue(thunk: fn() -> a) -> Result(a, TestErrorMessage) {
 
 @external(erlang, "qcheck_ffi", "rescue_error")
 @external(javascript, "../qcheck_ffi.mjs", "rescue_error")
+@external(python, "qcheck.internal.qcheck_ffi", "rescue_error")
 fn rescue_error(f: fn() -> a) -> Result(a, String)

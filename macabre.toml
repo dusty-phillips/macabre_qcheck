@@ -11,4 +11,3 @@ prng = { git = "git@github.com:dusty-phillips/macabre_prng.git", ref = "main" }
 [dev-dependencies]
 birdie = { git = "git@github.com:dusty-phillips/macabre_birdie.git", ref = "main" }
 gleeunit = { git = "git@github.com:dusty-phillips/macabre_gleeunit.git", ref = "main" }
-qcheck_gleeunit_utils = ">= 1.0.0 and < 2.0.0"

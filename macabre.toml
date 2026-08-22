@@ -11,3 +11,4 @@ prng = { git = "git@github.com:dusty-phillips/macabre_prng.git", ref = "main" }
 [dev-dependencies]
 birdie = { git = "git@github.com:dusty-phillips/macabre_birdie.git", ref = "main" }
 gleeunit = { git = "git@github.com:dusty-phillips/macabre_gleeunit.git", ref = "main" }
+qcheck_gleeunit_utils = { git = "git@github.com:dusty-phillips/macabre_qcheck_gleeunit_utils.git", ref = "main" }
